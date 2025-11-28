@@ -45,7 +45,6 @@ namespace work.ctrl3d
                 _tcpListener.Start();
                 _logger.Log(LogFilter.System, $"서버 시작됨 (Port: {_port})");
                 
-                // [Review Fix] async Task 실행을 명시적으로 처리 (Fire and forget)
                 _ = AcceptConnectionsAsync(_cts.Token);
             }
             catch (Exception e)
@@ -54,7 +53,6 @@ namespace work.ctrl3d
             }
         }
 
-        // [Review Fix] async void -> async Task
         private async Task AcceptConnectionsAsync(CancellationToken token)
         {
             while (!token.IsCancellationRequested)
@@ -74,8 +72,7 @@ namespace work.ctrl3d
                 catch (ObjectDisposedException) { break; }
                 catch (Exception e)
                 {
-                    // 리스너 오류는 치명적일 수 있으나, 루프를 유지할지 결정 필요. 
-                    // 여기서는 로그만 남기고 계속 시도.
+                    
                     _logger.LogError(LogFilter.Error, $"Accept Error: {e.Message}");
                 }
             }

@@ -27,8 +27,6 @@ namespace work.ctrl3d
         [Header("Log Settings")]
         [SerializeField] private bool enableLogging = true;
         [SerializeField] private Color logColor = Color.yellow;
-    
-        [Header("Detail Log Settings")]
         [SerializeField] private LogFilter logFilter = LogFilter.All;
 
         private TcpLogger _activeLogger;

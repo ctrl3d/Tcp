@@ -27,13 +27,10 @@ namespace work.ctrl3d
         [Header("Log Settings")]
         [SerializeField] private bool enableLogging = true;
         [SerializeField] private Color logColor = Color.cyan;
-        
-        [Header("Detail Log Settings")]
         [SerializeField] private LogFilter logFilter = LogFilter.All;
     
         private TcpLogger _activeLogger;
-    
-        // [Review Fix] UnityEvent 제거, 순수 C# 이벤트 사용
+        
         public event Action<int, string> OnClientConnected;
         public event Action<int, string, string> OnMessageReceived;
         public event Action<int, string> OnClientDisconnected;
@@ -98,35 +95,7 @@ namespace work.ctrl3d
             _server.Dispose();
             _server = null;
         }
-
-        #region Log Settings
-
-        [Button, Group("Logging Controls")]
-        public void EnableAllLogs()
-        {
-            if (_activeLogger != null) _activeLogger.Filter = LogFilter.All;
-            logFilter = LogFilter.All;
-            Log("모든 로그가 활성화되었습니다.");
-        }
-
-        [Button, Group("Logging Controls")]
-        public void DisableAllLogs()
-        {
-            if (_activeLogger != null) _activeLogger.Filter = LogFilter.None;
-            logFilter = LogFilter.None;
-            Log("모든 로그가 비활성화되었습니다.");
-        }
-
-        [Button, Group("Logging Controls")]
-        public void EnableErrorLogsOnly()
-        {
-            if (_activeLogger != null) _activeLogger.Filter = LogFilter.Error;
-            logFilter = LogFilter.Error;
-            Log("에러 로그만 활성화되었습니다.");
-        }
-
-        #endregion
-
+        
         #region Public Methods
 
         [Button, HorizontalGroup("Server Controls")]
